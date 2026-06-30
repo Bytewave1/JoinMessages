@@ -1,0 +1,12 @@
+name: JoinMessages
+version: '${version}'
+main: dev.bytewave.joinmessages.JoinMessages
+api-version: '1.21'
+author: Bytewave
+description: Configurable join and leave messages with hex color support.
+commands:
+  joinmessages:
+    description: Reload the plugin config
+    usage: /joinmessages reload
+    aliases: [jm]
+    permission: joinmessages.reload

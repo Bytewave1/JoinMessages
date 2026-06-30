@@ -1,0 +1,18 @@
+join-message: "&#9F9F9F[&#03FF00+&#9F9F9F] &#9F9F9F%player%"
+leave-message: "&#9F9F9F[&#FF0000-&#9F9F9F] &#9F9F9F%player%"
+
+first-join:
+  enabled: true
+  message: "&#9F9F9F[&#03FF00+&#9F9F9F] &#FFAA00%player% &#9F9F9Fjoined for the first time!"
+
+sounds:
+  join:
+    enabled: false
+    sound: "ENTITY_PLAYER_LEVELUP"
+    volume: 1.0
+    pitch: 1.0
+  leave:
+    enabled: false
+    sound: "ENTITY_ENDERMAN_TELEPORT"
+    volume: 1.0
+    pitch: 1.0
