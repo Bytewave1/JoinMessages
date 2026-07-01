@@ -9,6 +9,7 @@ A lightweight Kotlin plugin for Paper servers that adds configurable join and le
 - Hex color support (`&#RRGGBB`) and legacy color codes (`&a`, `&c`, etc.)
 - Optional join/leave sounds
 - In-game config reload
+- Folia support
 
 ## Installation
 
@@ -66,5 +67,5 @@ The jar will be in `build/libs/`.
 
 ## Requirements
 
-- Paper 1.21+
+- Paper 1.21+ (or Folia)
 - Java 21+

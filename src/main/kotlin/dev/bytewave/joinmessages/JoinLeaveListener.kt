@@ -39,7 +39,7 @@ class JoinLeaveListener(private val plugin: JoinMessages) : Listener {
             val pitch = config.getDouble("sounds.join.pitch", 1.0).toFloat()
 
             try {
-                val sound = Sound.valueOf(soundName)
+                val sound = Sound.valueOf(soundName.uppercase())
                 playSoundToAll(sound, volume, pitch)
             } catch (_: IllegalArgumentException) {
                 plugin.logger.warning("Invalid sound: $soundName")
@@ -62,7 +62,7 @@ class JoinLeaveListener(private val plugin: JoinMessages) : Listener {
             val pitch = config.getDouble("sounds.leave.pitch", 1.0).toFloat()
 
             try {
-                val sound = Sound.valueOf(soundName)
+                val sound = Sound.valueOf(soundName.uppercase())
                 playSoundToAll(sound, volume, pitch)
             } catch (_: IllegalArgumentException) {
                 plugin.logger.warning("Invalid sound: $soundName")
@@ -81,7 +81,8 @@ class JoinLeaveListener(private val plugin: JoinMessages) : Listener {
     }
 
     private fun formatMessage(raw: String, playerName: String): Component {
-        val replaced = raw.replace("%player%", playerName)
+        val safeName = miniMessage.escapeTags(playerName)
+        val replaced = raw.replace("%player%", safeName)
         val converted = convertHexColors(replaced)
         return miniMessage.deserialize(converted)
     }
