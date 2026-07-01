@@ -3,6 +3,7 @@ package dev.bytewave.joinmessages
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Sound
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -12,6 +13,9 @@ import org.bukkit.event.player.PlayerQuitEvent
 class JoinLeaveListener(private val plugin: JoinMessages) : Listener {
 
     private val miniMessage = MiniMessage.miniMessage()
+    private val folia: Boolean = runCatching {
+        Class.forName("io.papermc.paper.threadedregions.RegionizedServer")
+    }.isSuccess
 
     @EventHandler(priority = EventPriority.HIGH)
     fun onJoin(event: PlayerJoinEvent) {
@@ -36,7 +40,7 @@ class JoinLeaveListener(private val plugin: JoinMessages) : Listener {
 
             try {
                 val sound = Sound.valueOf(soundName)
-                plugin.server.onlinePlayers.forEach { it.playSound(it.location, sound, volume, pitch) }
+                playSoundToAll(sound, volume, pitch)
             } catch (_: IllegalArgumentException) {
                 plugin.logger.warning("Invalid sound: $soundName")
             }
@@ -59,9 +63,19 @@ class JoinLeaveListener(private val plugin: JoinMessages) : Listener {
 
             try {
                 val sound = Sound.valueOf(soundName)
-                plugin.server.onlinePlayers.forEach { it.playSound(it.location, sound, volume, pitch) }
+                playSoundToAll(sound, volume, pitch)
             } catch (_: IllegalArgumentException) {
                 plugin.logger.warning("Invalid sound: $soundName")
+            }
+        }
+    }
+
+    private fun playSoundToAll(sound: Sound, volume: Float, pitch: Float) {
+        plugin.server.onlinePlayers.forEach { target ->
+            if (folia) {
+                target.scheduler.run(plugin, { target.playSound(target.location, sound, volume, pitch) }, null)
+            } else {
+                target.playSound(target.location, sound, volume, pitch)
             }
         }
     }
